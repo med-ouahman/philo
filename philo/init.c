@@ -6,7 +6,7 @@
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 09:05:25 by mouahman          #+#    #+#             */
-/*   Updated: 2025/05/18 13:43:21 by mouahman         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:30:02 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int	init(t_data *data, int ac, char **av)
 	}
 	else
 		data->num_eat = 0;
+	data->estimated_time_to_think = estimated_time_to_think(data);
 	return (0);
 }

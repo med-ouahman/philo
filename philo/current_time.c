@@ -23,6 +23,6 @@ long	current_time(void)
 }
 
 long	time_diff(long start_time)
-{
+{	
 	return (current_time() - start_time);
 }

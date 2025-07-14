@@ -14,6 +14,7 @@
 
 int eating(t_philo *philo)
 {
+    printf("something is odd %d\n", philo->id);
     request_fork(philo);
     request_fork(philo);
 	printf("%ld %d is eating\n", time_diff(-1),
@@ -26,13 +27,13 @@ int eating(t_philo *philo)
 int sleeping(t_philo *philo)
 {
     printf("%ld %d is sleeping\n", time_diff(-1), philo->id);
+    usleep(philo->data->time_to_sleep * 1000);
     return (0);
 }
 
 int thinking(t_philo *philo)
 {
     printf("%ld %d is thinking\n", time_diff(-1), philo->id);
-    usleep(ESTIMATED_TIME_TO_THINK);
     return (0);
 }
 

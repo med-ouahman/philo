@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 11:30:47 by mouahman          #+#    #+#             */
-/*   Updated: 2025/05/19 08:45:42 by mouahman         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:09:23 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int ac, char **av)
 	if (5 > ac || 6 < ac)
 		return (usage());
 	if (-1 == init(&data, ac, av))
-		return (printf("wrong inputs\n"), 1);
+		return (write(STDERR_FILENO, "wrong inputs\n", 13), 1);
 	data.philos = create_philos(data.num_philos);
 	data.fork_mutexes = init_fork_mutex(data.num_philos);
 	if (NULL == data.philos || NULL == data.fork_mutexes)

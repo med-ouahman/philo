@@ -20,7 +20,7 @@ int	rip(t_philo *philo)
 int routine(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		usleep(1000);
+		usleep(10);
 	while (philo->num_meals < philo->data->num_eat)
 	{
 		if (0 != philo->data->num_eat)
@@ -37,7 +37,6 @@ int	simulation(t_data *data)
 	int	i;
 
 	i = 0;
-	
 	while (i < data->num_philos)
 	{
 		data->philos[i].pid = fork();

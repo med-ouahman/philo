@@ -6,7 +6,7 @@
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 11:31:00 by mouahman          #+#    #+#             */
-/*   Updated: 2025/06/29 21:56:26 by mouahman         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:30:32 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-typedef struct s_data		t_data;
+typedef struct s_data	t_data;
 
 typedef pthread_mutex_t	t_mutex;
 
@@ -37,13 +37,7 @@ typedef struct s_philo
 	t_mutex		meal_lock;
 	int			ph_id;
 	int			index;
-	int			ph_fork;
-	int			has_eaten;
-	int			is_eating;
-	int			is_thinking;
-	int			is_sleeping;
 	long		last_meal;
-	int			last_action;
 	int			num_meals;
 	t_data		*data;
 }	t_philo;
@@ -58,12 +52,16 @@ typedef struct s_data
 	long			start_time;
 	int				num_philos;
 	int				time_to_die;
-	int				death;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				estimated_time_to_think;
+	int				death;
 	int				num_eat;
 }	t_data;
 
+int		rip(t_data *data);
+int		lock_printf(t_philo *philo, char *format);
+int		estimated_time_to_think(t_data *data);
 int		usage(void);
 int		init(t_data *data, int ac, char **av);
 int		ft_atoi(const char *nptr);
@@ -77,7 +75,7 @@ long	time_diff(long start_time);
 t_mutex	*init_fork_mutex(int num_philos);
 int		request_fork(t_philo *philo, pthread_mutex_t *fork_mutex);
 int		join_threads(t_philo *philos);
-int		relase_fork(pthread_mutex_t *fork_mutex);
+int		release_fork(pthread_mutex_t *fork_mutex);
 int		eating(t_philo *philo);
 int		sleeping(t_philo *philo);
 int		thinking(t_philo *philo);

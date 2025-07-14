@@ -6,18 +6,11 @@
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 20:23:37 by mouahman          #+#    #+#             */
-/*   Updated: 2025/06/29 21:55:06 by mouahman         ###   ########.fr       */
+/*   Updated: 2025/07/05 17:39:01 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	fork_index(int i, int num_philos)
-{
-	if (0 == i)
-		return (num_philos - 1);
-	return (i - 1);
-}
 
 int	init_philos(t_data *data)
 {
@@ -28,17 +21,17 @@ int	init_philos(t_data *data)
 	i = 0;
 	while (i < data->num_philos)
 	{
+		pthread_mutex_init(&data->philos[i].meal_lock, NULL);
 		data->philos[i].data = data;
 		data->philos[i].ph_id = i + 1;
 		data->philos[i].index = i;
 		data->philos[i].num_meals = 0;
 		if (0 == data->num_eat)
 			data->philos[i].num_meals = -1;
-		pthread_mutex_init(&data->philos[i].meal_lock, NULL);
 		data->philos[i].last_meal = current_time();
 		data->philos[i].left_fork = &data->fork_mutexes[i];
 		data->philos[i].right_fork
-			= &data->fork_mutexes[fork_index(i, data->num_philos)];
+			= &data->fork_mutexes[(i + 1) % data->num_philos];
 		i++;
 	}
 	return (0);
