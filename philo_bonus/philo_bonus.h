@@ -70,7 +70,7 @@ int	cleanup(t_data *);
 void	print_data(t_data *);
 int		rip(t_philo *philo);
 int		lock_printf(t_philo *philo, char *format);
-int		waiter(t_philo *);
+int		philo_died(t_philo *);
 int 	usage(void);
 int		init(t_data *data, int ac, char **av);
 long	parse_args(char *s);

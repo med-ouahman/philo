@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   request_fork.c                                     :+:      :+:    :+:   */
+/*   join_threads.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 14:31:20 by mouahman          #+#    #+#             */
-/*   Updated: 2025/06/27 21:44:31 by mouahman         ###   ########.fr       */
+/*   Created: 2025/04/20 10:05:06 by mouahman          #+#    #+#             */
+/*   Updated: 2025/04/23 08:53:51 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
-int	request_fork(t_philo *philo)
+int	join_threads(t_philo *philos)
 {
-    sem_wait(philo->data->forks);
-    lock_printf(philo, "%ld %d has taken a fork\n");
-    return (0);
-}
+	int	i;
 
-int release_forks(t_philo *philo)
-{
-    sem_post(philo->data->forks);
-    sem_post(philo->data->forks);
-    return (0);
+	i = 0;
+	while (i < philos->data->num_philos)
+	{
+		if (0 != pthread_join(philos[i].th_id, NULL))
+			return (1);
+		i++;
+	}
+	return (0);
 }

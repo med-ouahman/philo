@@ -14,7 +14,7 @@
 
 int	usage(void)
 {
-	printf("Usage: ./philo number_of_philosophers \
+	printf("Usage: ./philo_bonus number_of_philosophers \
 time_to_die \
 time_to_eat \
 time_to_sleep \

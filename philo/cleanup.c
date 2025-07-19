@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   request_fork.c                                     :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 14:31:20 by mouahman          #+#    #+#             */
-/*   Updated: 2025/06/27 21:44:31 by mouahman         ###   ########.fr       */
+/*   Created: 2025/04/30 09:29:55 by mouahman          #+#    #+#             */
+/*   Updated: 2025/05/19 08:45:47 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
-int	request_fork(t_philo *philo)
+void	vfree(void **ptr)
 {
-    sem_wait(philo->data->forks);
-    lock_printf(philo, "%ld %d has taken a fork\n");
-    return (0);
+	if (NULL == *ptr)
+		return ;
+	free(*ptr);
+	*ptr = NULL;
 }
 
-int release_forks(t_philo *philo)
+int	cleanup(t_data *data, int code)
 {
-    sem_post(philo->data->forks);
-    sem_post(philo->data->forks);
-    return (0);
+	vfree((void **)&data->philos);
+	vfree((void **)&data->fork_mutexes);
+	return (code);
 }

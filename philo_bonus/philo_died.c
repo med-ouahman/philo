@@ -35,12 +35,12 @@
 // }
 
 
-int	waiter(t_philo *philo)
+int	philo_died(t_philo *philo)
 {
 	if (philo->data->time_to_die <= time_diff(philo->last_meal))
 	{
-		philo->data->died = true;
-		exit(1);
+		sem_wait(philo->data->death_sem);
+		lock_printf(philo,"%ld %d died\n");
 		return (1);
 	}
 	return (0);

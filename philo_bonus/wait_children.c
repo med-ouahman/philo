@@ -12,27 +12,26 @@
 
 #include "philo_bonus.h"
 
-static int	died(int stat, t_philo *philo)
-{
-	if (WIFEXITED(stat))
-	{
+// static int	died(int stat, t_philo *philo)
+// {
+// 	if (WIFEXITED(stat))
+// 	{
 	
-		printf("%ld %d died\n", time_diff(philo->data->start_time), philo->id);
-		// lock_printf(philo, "%ld %d died\n");
-		return (1);
-	}
-	return (0);
-}
+// 		printf("%ld %d died\n", time_diff(philo->data->start_time), philo->id);
+// 		// lock_printf(philo, "%ld %d died\n");
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
-int	kill_all(t_data *data, int d)
+int	kill_all(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->num_philos)
 	{
-		if (i != d)
-			kill(data->philos[i].pid, SIGINT);
+		kill(data->philos[i].pid, SIGINT);
 		i++;
 	}
 	return (0);
@@ -40,19 +39,10 @@ int	kill_all(t_data *data, int d)
 
 int	wait_children(t_data *data)
 {
-	int		i;
 	int		stat;
 
-	i = 0;
-	while (i < data->num_philos)
-	{
-		waitpid(data->philos[i].pid, &stat, 0);
-		if (died(stat, &data->philos[i]) || 1)
-		{
-			break ;
-		}
-		i++;
-	}
-	kill_all(data, i);
+	waitpid(0, &stat, 0);
+	if (WIFEXITED(stat))
+		kill_all(data);
 	return (0);
 }

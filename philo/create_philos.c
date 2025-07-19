@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   request_fork.c                                     :+:      :+:    :+:   */
+/*   create_philos.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 14:31:20 by mouahman          #+#    #+#             */
-/*   Updated: 2025/06/27 21:44:31 by mouahman         ###   ########.fr       */
+/*   Created: 2025/04/17 08:54:36 by mouahman          #+#    #+#             */
+/*   Updated: 2025/07/05 17:26:01 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
-int	request_fork(t_philo *philo)
+t_philo	*create_philos(int num_philos)
 {
-    sem_wait(philo->data->forks);
-    lock_printf(philo, "%ld %d has taken a fork\n");
-    return (0);
+	return (malloc(num_philos * sizeof(t_philo)));
 }
 
-int release_forks(t_philo *philo)
+int	create_threads(t_data *data)
 {
-    sem_post(philo->data->forks);
-    sem_post(philo->data->forks);
-    return (0);
+	int	i;
+
+	i = 0;
+	while (i < data->num_philos)
+	{
+		if (0 != pthread_create(&data->philos[i].th_id,
+				NULL,
+				simulation,
+				&data->philos[i]))
+			return (1);
+		i++;
+	}
+	if (0 != pthread_create(&data->waiter, NULL, wait_for_death, data))
+		return (1);
+	return (0);
 }

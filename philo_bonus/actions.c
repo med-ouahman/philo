@@ -24,12 +24,12 @@ int my_usleep(t_philo *philo, long time)
     now = current_time() + time;
     while (now > current_time())
     {
-        if (waiter(philo))
-            return (1);
+        if (philo_died(philo))
+            exit(1);
         usleep(10);
     }
-    if (waiter(philo))
-        return (1);
+    if (philo_died(philo))
+        exit(1);
     return (0);
 }
 
@@ -40,14 +40,13 @@ int eating(t_philo *philo)
         request_fork(philo);
         my_usleep(philo, philo->data->time_to_die);
     }
-    waiter(philo);
-    if (request_fork(philo))
+    if (philo_died(philo))
     {
         sem_post(philo->data->forks);
         exit(1);
     }
-    waiter(philo);
-    if (request_fork(philo))
+    request_fork(philo);
+    if (philo_died(philo))
     {
         release_forks(philo);
         exit(1);
@@ -61,8 +60,7 @@ int eating(t_philo *philo)
 
 int sleeping(t_philo *philo)
 {
-    waiter(philo);
-    if (rip(philo))
+    if (philo_died(philo))
         exit(1);
     lock_printf(philo, "%ld %d is sleeping\n");
     my_usleep(philo, philo->data->time_to_sleep);
@@ -71,8 +69,7 @@ int sleeping(t_philo *philo)
 
 int thinking(t_philo *philo)
 {
-    waiter(philo);
-    if (rip(philo))
+    if (philo_died(philo))
         exit(1);
     lock_printf(philo, "%ld %d is thinking\n");
     if (philo->data->num_philos % 2)

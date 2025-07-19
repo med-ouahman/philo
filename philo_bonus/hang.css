@@ -1,0 +1,22 @@
+
+#include <unistd.h>
+#include <sys/wait.h>
+#include <semaphore.h>
+
+int main()
+{
+	sem_t *s = sem_open("/fd", 0100, 420);
+	int id = fork();
+
+	if (id == 0)
+	{
+		sem_wait(s);
+		exit(0);
+	}
+	waitpid(id, NULL, 0);
+	sleep(4);
+//	sem_post(s);
+	printf("done\n");
+	sem_close(s);
+	sem_unlink("/f");
+}

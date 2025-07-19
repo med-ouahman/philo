@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   request_fork.c                                     :+:      :+:    :+:   */
+/*   destroy_mutex.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 14:31:20 by mouahman          #+#    #+#             */
-/*   Updated: 2025/06/27 21:44:31 by mouahman         ###   ########.fr       */
+/*   Created: 2025/04/30 09:41:32 by mouahman          #+#    #+#             */
+/*   Updated: 2025/05/18 13:46:37 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
-int	request_fork(t_philo *philo)
+int	destory_mutex(t_data *data)
 {
-    sem_wait(philo->data->forks);
-    lock_printf(philo, "%ld %d has taken a fork\n");
-    return (0);
-}
+	long	i;
 
-int release_forks(t_philo *philo)
-{
-    sem_post(philo->data->forks);
-    sem_post(philo->data->forks);
-    return (0);
+	i = 0;
+	while (i < data->num_philos)
+	{
+		if (0 != pthread_mutex_destroy(&data->fork_mutexes[i]))
+			return (1);
+		i++;
+	}
+	return (0);
 }

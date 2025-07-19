@@ -19,15 +19,11 @@ int	time_to_think(t_data *data)
 	return (0);
 }
 
-int	rip(t_philo *philo)
-{
-	return (philo->data->died);
-}
-
 int	routine(t_philo *philo)
 {	
-	if (philo->id % 2 == 0)
+	if (philo->id % 2)
 		usleep(10);
+	update_last_meal(philo);
 	philo->data->start_time = current_time();
 	while (philo->num_meals < philo->data->num_eat)
 	{
@@ -52,12 +48,12 @@ int	simulation(t_data *data)
 			return (-1);
 		if (0 == data->philos[i].pid)
 		{
-			update_last_meal(&data->philos[i]);
 			routine(&data->philos[i]);
 			exit(EXIT_SUCCESS);
 		}
 		i++;
 	}
 	wait_children(data);
+	sem_post(data->death_sem);
 	return (0);
 }

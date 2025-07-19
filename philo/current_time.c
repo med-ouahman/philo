@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   request_fork.c                                     :+:      :+:    :+:   */
+/*   current_time.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 14:31:20 by mouahman          #+#    #+#             */
-/*   Updated: 2025/06/27 21:44:31 by mouahman         ###   ########.fr       */
+/*   Created: 2025/04/18 09:02:18 by mouahman          #+#    #+#             */
+/*   Updated: 2025/04/30 10:15:40 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
-int	request_fork(t_philo *philo)
+long	current_time(void)
 {
-    sem_wait(philo->data->forks);
-    lock_printf(philo, "%ld %d has taken a fork\n");
-    return (0);
+	struct timeval	tv;
+	long			milliseconds;
+
+	gettimeofday(&tv, NULL);
+	milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (milliseconds);
 }
 
-int release_forks(t_philo *philo)
-{
-    sem_post(philo->data->forks);
-    sem_post(philo->data->forks);
-    return (0);
+long	time_diff(long start_time)
+{	
+	return (current_time() - start_time);
 }

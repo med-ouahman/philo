@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   request_fork.c                                     :+:      :+:    :+:   */
+/*   usage.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/25 14:31:20 by mouahman          #+#    #+#             */
-/*   Updated: 2025/06/27 21:44:31 by mouahman         ###   ########.fr       */
+/*   Created: 2025/03/29 11:35:17 by mouahman          #+#    #+#             */
+/*   Updated: 2025/06/01 16:27:02 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_bonus.h"
+#include "philo.h"
 
-int	request_fork(t_philo *philo)
+int	usage(void)
 {
-    sem_wait(philo->data->forks);
-    lock_printf(philo, "%ld %d has taken a fork\n");
-    return (0);
-}
-
-int release_forks(t_philo *philo)
-{
-    sem_post(philo->data->forks);
-    sem_post(philo->data->forks);
-    return (0);
+	printf("Usage: ./philo number_of_philosophers \
+time_to_die \
+time_to_eat \
+time_to_sleep \
+[number_of_times_each_philosopher_must_eat]\n");
+	return (1);
 }
