@@ -18,15 +18,11 @@ int	estimated_time_to_think(t_data *data)
 
 	if (data->num_philos % 2 == 0)
 		return (0);
-	time_to_think = data->time_to_eat;
+	time_to_think = 0;
 	if (data->time_to_eat > data->time_to_sleep)
 	{
-		time_to_think
-			= data->time_to_die - data->time_to_eat - data->time_to_sleep - 2;
-	}
-	else if (data->time_to_sleep > data->time_to_eat)
-	{
-		time_to_think = 0;
+		time_to_think = data->time_to_eat - data->time_to_sleep + 2;
+
 	}
 	return (time_to_think);
 }

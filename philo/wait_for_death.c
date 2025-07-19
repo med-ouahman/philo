@@ -69,7 +69,7 @@ void	*wait_for_death(void *arg)
 	{
 		if (has_eaten(data) || check_for_death(data))
 			return (NULL);
-		usleep(50);
+		usleep(10);
 	}
 	return (NULL);
 }

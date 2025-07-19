@@ -12,15 +12,23 @@
 
 #include "philo_bonus.h"
 
-int	rip(t_philo *philo)
+int	time_to_think(t_data *data)
 {
-	return philo->num_meals == -1;
+	if (data->num_philos % 2 == 0)
+		return (0);
+	return (0);
 }
 
-int routine(t_philo *philo)
+int	rip(t_philo *philo)
 {
+	return (philo->data->died);
+}
+
+int	routine(t_philo *philo)
+{	
 	if (philo->id % 2 == 0)
 		usleep(10);
+	philo->data->start_time = current_time();
 	while (philo->num_meals < philo->data->num_eat)
 	{
 		if (0 != philo->data->num_eat)
@@ -44,10 +52,9 @@ int	simulation(t_data *data)
 			return (-1);
 		if (0 == data->philos[i].pid)
 		{
+			update_last_meal(&data->philos[i]);
 			routine(&data->philos[i]);
-			// pthread_create(&data->philos[i].watcher, NULL, waiter, NULL);
-			// pthread_join(data->philos[i].watcher, NULL);
-			exit(0);
+			exit(EXIT_SUCCESS);
 		}
 		i++;
 	}

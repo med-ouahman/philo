@@ -14,8 +14,15 @@
 
 int	request_fork(t_philo *philo)
 {
+    if (rip(philo))
+        return (1);
     sem_wait(philo->data->forks);
-    printf("%ld %d has taken a fork\n", time_diff(-1), philo->id);
+    if (rip(philo))
+    {
+        sem_post(philo->data->forks);
+        return (1);
+    }
+    lock_printf(philo, "%ld %d has taken a fork\n");
     return (0);
 }
 

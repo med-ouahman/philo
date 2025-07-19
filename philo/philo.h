@@ -60,6 +60,7 @@ typedef struct s_data
 }	t_data;
 
 int		rip(t_data *data);
+void	update_last_meal(t_philo *philo);
 int		lock_printf(t_philo *philo, char *format);
 int		estimated_time_to_think(t_data *data);
 int		usage(void);

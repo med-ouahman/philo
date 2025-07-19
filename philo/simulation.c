@@ -38,13 +38,14 @@ void	*simulation(void *arg)
 	t_philo	*current_ph;
 
 	current_ph = (t_philo *)arg;
-	if (current_ph->ph_id % 2)
+	if (current_ph->ph_id % 2 == 0)
 		usleep(1000);
+	update_last_meal(current_ph);
 	while (current_ph->num_meals < current_ph->data->num_eat)
 	{
 		if (0 != current_ph->data->num_eat)
 			current_ph->num_meals++;
-		if (-1 == eating(current_ph))
+		if (eating(current_ph))
 			return (NULL);
 		if (sleeping(current_ph))
 			return (NULL);

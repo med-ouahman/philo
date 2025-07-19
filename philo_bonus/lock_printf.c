@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   current_time.c                                     :+:      :+:    :+:   */
+/*   lock_printf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mouahman <mouahman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mouahman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/18 09:02:18 by mouahman          #+#    #+#             */
-/*   Updated: 2025/06/25 14:48:14 by mouahman         ###   ########.fr       */
+/*   Created: 2025/07/10 21:51:34 by mouahman          #+#    #+#             */
+/*   Updated: 2025/07/10 21:53:33 by mouahman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-long	current_time(void)
+int	lock_printf(t_philo *philo, char *format)
 {
-	struct timeval	tv;
-	long			milliseconds;
-
-	gettimeofday(&tv, NULL);
-	milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (milliseconds);
-}
-
-long	time_diff(long start_time)
-{
-	return (current_time() - start_time);
+	sem_post(philo->data->printlock);
+	sem_wait(philo->data->printlock);
+	printf(format, time_diff(philo->data->start_time), philo->id);
+	return (0);
 }

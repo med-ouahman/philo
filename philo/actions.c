@@ -46,9 +46,9 @@ int	eating(t_philo *philo)
 		release_fork(philo->left_fork);
 		return (-1);
 	}
-	lock_printf(philo, "%ld %d is eating\n");
 	update_last_meal(philo);
 	ft_usleep(philo->data->time_to_eat);
+	lock_printf(philo, "%ld %d is eating\n");
 	release_fork(philo->right_fork);
 	release_fork(philo->left_fork);
 	return (0);
@@ -59,7 +59,7 @@ int	sleeping(t_philo *philo)
 	if (rip(philo->data))
 		return (-1);
 	lock_printf(philo, "%ld %d is sleeping\n");
-	usleep(philo->data->time_to_sleep * 1000);
+	ft_usleep(philo->data->time_to_sleep);
 	return (0);
 }
 
@@ -68,6 +68,6 @@ int	thinking(t_philo *philo)
 	if (rip(philo->data))
 		return (-1);
 	lock_printf(philo, "%ld %d is thinking\n");
-	usleep(philo->data->estimated_time_to_think);
+	ft_usleep(philo->data->estimated_time_to_think);
 	return (0);
 }

@@ -12,40 +12,37 @@
 
 #include "philo_bonus.h"
 
-static int	timed_out(t_philo *philo)
-{
-	if (current_time() -philo->last_meal >= philo->data->time_to_die)
-		return (1);
-	return (0);
-}
+// static int	timed_out(t_philo *philo)
+// {
+// 	sem_wait(philo->data->meal_sem);
+// 	if (time_diff(philo->last_meal) >= philo->data->time_to_die)
+// 	{
+// 		sem_post(philo->data->meal_sem);
+// 		return (1);
+// 	}
+// 	sem_post(philo->data->meal_sem);
+// 	return (0);
+// }
 
-static int	check_for_death(t_philo *philo)
-{
-	int	i;
+// static int	check_for_death(t_philo *philo)
+// {
+// 	if (timed_out(philo))
+// 	{
+// 		exit(1);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
-	i = 0;
-	
-	if (timed_out(philo))
+
+int	waiter(t_philo *philo)
+{
+	if (philo->data->time_to_die <= time_diff(philo->last_meal))
 	{
 		philo->data->died = true;
-		printf("%ld %d died\n",
-			time_diff(-1), philo->id);
+		exit(1);
 		return (1);
 	}
 	return (0);
-}
-void	*waiter(void *p)
-{
-
-	t_philo	*philo;
-
-	philo = p;
-	while (true)
-	{
-		if (check_for_death(philo))
-			return (NULL);
-		usleep(1000);
-	}
-	return (philo);
 }
 

@@ -19,6 +19,7 @@ int	init(t_data *data, int ac, char **av)
 	data->time_to_eat = (int)parse_args(av[3]);
 	data->time_to_sleep = (int)parse_args(av[4]);
 	data->start_time = current_time();
+	data->died = false;
 	if (-1 == data->num_philos
 		|| -1 == data->time_to_die
 		|| -1 == data->time_to_eat

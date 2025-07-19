@@ -22,8 +22,6 @@ int	create_threads(t_data *data)
 	int	i;
 
 	i = 0;
-	if (0 != pthread_create(&data->waiter, NULL, wait_for_death, data))
-		return (1);
 	while (i < data->num_philos)
 	{
 		if (0 != pthread_create(&data->philos[i].th_id,
@@ -33,5 +31,7 @@ int	create_threads(t_data *data)
 			return (1);
 		i++;
 	}
+	if (0 != pthread_create(&data->waiter, NULL, wait_for_death, data))
+		return (1);
 	return (0);
 }
