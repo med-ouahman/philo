@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "philo.h": "c",
+        "pthread.h": "c",
+        "time.h": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c",
+        "span": "c",
+        "unistd.h": "c",
+        "format": "c"
+    }
+}

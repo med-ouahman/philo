@@ -1,0 +1,17 @@
+The Producer needs to produce and the consumer needs to consume.
+Shared Memory is the solution for this Problem:
+To allow producers and consumers to run concurrently, we must have available a buffer of 
+items that can be filled by the producer and consumed by the consumer.
+
+This buffer will reside in a region of memory that is shared  by the two processes.
+
+
+
+				Two kinds of buffers:
+					|
+                /-----------------------------------------------\
+		|						|
+		|						|
+		|						|	
+		|						|
+	Unbounded Buffer				  Bounded Buffer
